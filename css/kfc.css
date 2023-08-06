@@ -1,0 +1,33 @@
+.titulo {
+    color: #ce3b24;
+    font-size: 40px;
+}
+
+.titulo2 {
+    color: #ce3b24;
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.titulo2:hover {
+    color: white;
+    border-bottom: 1px solid red;
+}
+
+
+.navbar {
+    background-color: #212529;
+    margin-bottom: 50px;
+}
+
+.kfctitle {
+    margin-top: 100px;
+}
+
+.carrito {
+    margin-right: 500px;
+}
+
+.container {
+    margin-top: 100px;
+}
