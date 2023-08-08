@@ -67,11 +67,15 @@
                 echo '<div class="card-body">';
                 echo '<p class="card-text">' . $row['descripcion_producto'] . '</p>';
                 echo '<p class="card-text">Precio: $' . number_format($precio, 2) . '</p>';
+
+                //FORMULARIO
                 echo '<form action="carrito.php" method="POST">';
 
                 echo '<input type="hidden" name="id_producto" value="' . $row['id_producto'] . '">';
 
                 echo '<input type="number" class="form-control mb-3" name="cantidad[]" value="0" min="0">';
+
+                $precio = $row['precio'];
                 echo '<input type="hidden" name="precio[]" value="' . $precio . '">';
 
                 // Fetch the product name from the database based on the ID
@@ -89,8 +93,9 @@
                 echo '<input type="hidden" name="nombre_producto[]" value="' . $nombre_producto . '">'; // Add the product name to the form
 
                 echo '<div class="text-center">';
-                echo '<button type="submit" class="btn btn-primary">' . "Añadir al carrito" . '</button>';
+                echo '<button class="btn btn-primary add-to-cart-btn" data-product-id="' . $row['id_producto'] . '">Añadir al carrito</button>';
                 echo '</div>';
+
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
@@ -99,6 +104,7 @@
 
             $conn->close();
             ?>
+
         </div>
     </div>
 
@@ -110,6 +116,18 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart-btn').click(function() {
+                var productId = $(this).data('product-id');
+                $.post('add-to-cart.php', {
+                    productId: productId
+                }, function(data) {
+                    alert('Producto agregado al carrito');
+                });
+            });
+        });
     </script>
 </body>
 

@@ -1,39 +1,3 @@
-<?php
-require("../conexion.php");
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Start the session
-    session_start();
-
-    // Retrieve the product information from the form data
-    $id_producto = isset($_POST['id_producto']) ? $_POST['id_producto'] : null;
-    $cantidad = isset($_POST['cantidad']) ? intval($_POST['cantidad']) : null;
-    $precio = isset($_POST['precio']) ? intval($_POST['precio']) : null;
-
-    // Add the product to the shopping cart (you can store the cart in a session or database)
-    // Example:
-    $_SESSION['cart'][] = [
-        'id_producto' => $id_producto,
-        'cantidad' => $cantidad,
-        'precio' => $precio
-    ];
-
-    // Verificar si el producto ya existe en el carrito
-    if (isset($_SESSION['carrito'][$id_producto])) {
-        // Actualizar la cantidad del producto en el carrito
-        $_SESSION['carrito'][$id_producto]['cantidad'] += $cantidad;
-    } else {
-        // Agregar el producto al carrito
-        $_SESSION['carrito'][$id_producto] = array(
-            'nombre' => $nombre,
-            'precio' => $precio,
-            'cantidad' => $cantidad
-        );
-    }
-}
-$conn->close();
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -66,28 +30,52 @@ $conn->close();
                     </tr>
                 </thead>
                 <tbody id="cart-items">
-                    <!-- Aquí se mostrarán los productos en el carrito -->
                     <?php
-                    // Display the products in the shopping cart
-                    // Example:
-                    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-                        foreach ($_SESSION['cart'] as $item) {
-                            echo '<tr>';
-                            echo '<td>' . $item['id_producto'] . '</td>';
-                            echo '<td>' . floatval($item['cantidad']) . '</td>';
-                            echo '<td>' . floatval($item['precio']) . '</td>';
-                            echo '<td>' . (floatval($item['cantidad']) * floatval($item['precio'])) . '</td>';
+                    // Iniciar la sesión
+                    session_start();
 
-                            echo '<td>...</td>'; // Actions column
-                            echo '</tr>';
+                    // Mostrar los productos del carrito
+                    if (isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+                        foreach ($_SESSION['carrito'] as $i => $producto) {
+                            if (isset($producto['nombre_producto'])) {
+                                $nombre_producto = $producto['nombre_producto'];
+                            } else {
+                                $nombre_producto = "No hay nombre";
+                            }
+                            if (isset($producto['cantidad']) && isset($producto['precio'])) {
+                                $subtotal = 0;
+                                if (is_array($producto['cantidad'])) {
+                                    $subtotal = intval($producto['cantidad']) * intval($producto['precio']);
+                                } else {
+                                    $subtotal = $producto['cantidad'] * $producto['precio'];
+                                }
+
+                                // Check if 'nombre_producto' is set before accessing it
+                                $nombre_producto = isset($producto['nombre_producto']) ? $producto['nombre_producto'] : 'No hay nombre';
+
+                                echo '<tr>';
+                                echo '<td>' . (string)$nombre_producto . '</td>';
+
+
+                                // Convert 'cantidad' and 'precio' arrays to strings using 'implode()'
+                                echo '<td>' . ((is_array($producto['cantidad'])) ? array_sum($producto['cantidad']) : $producto['cantidad']) . '</td>';
+
+                                echo '<td>$' . (is_array($producto['precio']) ? implode(', ', $producto['precio']) : $producto['precio']) . '</td>';
+                                echo '<td>$' . number_format($subtotal, 2) . '</td>';
+                                echo '<td><button class="btn btn-danger">Eliminar</button></td>';
+                                echo '</tr>';
+                            }
                         }
+                    } else {
+                        echo '<tr><td colspan="5">El carrito está vacío.</td></tr>';
                     }
                     ?>
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end">
-                <h4>Total: $<span id="cart-total">0</span></h4>
-            </div>
+
+            <!-- <div class="d-flex justify-content-end">
+                <h4> Total: $<span id="cart-total"><?php echo number_format($total, 2); ?></span></h4>
+            </div> -->
         </div>
     </main>
     <footer>
