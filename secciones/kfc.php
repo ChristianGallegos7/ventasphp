@@ -68,10 +68,26 @@
                 echo '<p class="card-text">' . $row['descripcion_producto'] . '</p>';
                 echo '<p class="card-text">Precio: $' . number_format($precio, 2) . '</p>';
                 echo '<form action="carrito.php" method="POST">';
+
                 echo '<input type="hidden" name="id_producto" value="' . $row['id_producto'] . '">';
 
                 echo '<input type="number" class="form-control mb-3" name="cantidad[]" value="0" min="0">';
                 echo '<input type="hidden" name="precio[]" value="' . $precio . '">';
+
+                // Fetch the product name from the database based on the ID
+                $id_producto = $row['id_producto'];
+                $nombre_producto = ""; // Variable to store the product name
+
+                $sql = "SELECT nombre_producto FROM productos_local WHERE id_producto = $id_producto";
+                $result_nombre = $conn->query($sql);
+
+                if ($result_nombre->num_rows > 0) {
+                    $row_nombre = $result_nombre->fetch_assoc();
+                    $nombre_producto = $row_nombre['nombre_producto'];
+                }
+
+                echo '<input type="hidden" name="nombre_producto[]" value="' . $nombre_producto . '">'; // Add the product name to the form
+
                 echo '<div class="text-center">';
                 echo '<button type="submit" class="btn btn-primary">' . "Añadir al carrito" . '</button>';
                 echo '</div>';
