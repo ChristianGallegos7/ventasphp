@@ -61,7 +61,7 @@ $resultado = mysqli_query($conn, $query);
 
                 <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input type="number" class="form-control mb-3" id="precio" name="precio">
+                    <input type="number" class="form-control mb-3" id="precio" name="precio" step="0.01">
                 </div>
 
                 <div class="form-group">

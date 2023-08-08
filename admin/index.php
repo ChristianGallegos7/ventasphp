@@ -32,10 +32,10 @@
         <div class="table-responsive">
             <div class="container">
                 <h2 class="text-center mt-3">Lista de productos</h2>
-                <table class="table table-primary mt-3">
+                <table class="table table-striped table-hover mt-3">
                     <thead>
                         <tr>
-                            <th scope="col">ID PRODUCTO</th>
+                            <!-- <th scope="col">ID PRODUCTO</th> -->
                             <th scope="col">NOMBRE PRODUCTO</th>
                             <th scope="col">DESCRIPCION PRODUCTO</th>
                             <th scope="col">STOCK</th>
@@ -48,17 +48,19 @@
                     <tbody>
                         <?php
                         require_once("../conexion.php");
-                        $query = "SELECT * FROM productos_local";
+                        $query = "SELECT p.*, l.Nombre 
+                        FROM productos_local p 
+                        INNER JOIN local l ON p.id_local = l.id_local";
                         $result = mysqli_query($conn, $query);
 
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr>';
-                            echo '<td class="text-center">' . $row["id_producto"] . '</td>';
+                            // echo '<td class="text-center">' . $row["id_producto"] . '</td>';
                             echo '<td>' . $row["nombre_producto"] . '</td>';
                             echo '<td>' . $row["descripcion_producto"] . '</td>';
                             echo '<td>' . $row["stock"] . '</td>';
                             echo '<td>' . $row["precio"] . "$" . '</td>';
-                            echo '<td class="text-center">' . $row["id_local"] . '</td>';
+                            echo '<td class="text-center">' . $row["Nombre"] . '</td>';
                             $imagen_base64 = base64_encode($row["imagen"]);
                             echo '<td><img width="100px" class="imagenadmin" src="data:image/jpeg;base64,' . $imagen_base64 . '"/></td>';
                             echo '<td>';
