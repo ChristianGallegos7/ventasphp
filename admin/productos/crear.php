@@ -1,3 +1,10 @@
+<?php
+require_once("../../conexion.php");
+
+// Selección de los registros de la tabla "local"
+$query = "SELECT id_local, Nombre FROM local";
+$resultado = mysqli_query($conn, $query);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -21,14 +28,61 @@
                 <img src="../images/avatar.png" alt="" width="50px">
             </div>
             <div class="nav navbar-nav">
-                <a class="nav-item nav-link" href="#">Admin</a>
+                <a class="nav-item nav-link" href="http://localhost/dashboard/trainer/admin/index.php">Admin</a>
+                <a class="nav-item nav-link" href="#"></a>
                 <a class="nav-item nav-link active btn btn-success text-white" href="#" aria-current="page">Agregar productos <span class="visually-hidden">(current)</span></a>
             </div>
         </nav>
         <!-- </div> -->
     </header>
     <main>
-        <h1>cerar</h1>
+        <h1 class="text-center">Formulario de producto</h1>
+        <div class="container card mt-5">
+            <form action="procesar_formulario.php" method="POST" enctype="multipart/form-data" class="p-3">
+                <!-- <div class="form-group">
+                    <label for="id_producto">ID del producto:</label>
+                    <input type="text" class="form-control mb-3" id="id_producto" name="id_producto">
+                </div> -->
+
+                <div class="form-group">
+                    <label for="nombre_producto">Nombre del producto:</label>
+                    <input type="text" class="form-control mb-3" id="nombre_producto" name="nombre_producto">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion_producto">Descripción del producto:</label>
+                    <textarea class="form-control mb-3" id="descripcion_producto" name="descripcion_producto"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" class="form-control mb-3" id="stock" name="stock">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" class="form-control mb-3" id="precio" name="precio">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" class="form-control-file mb-3" id="imagen" name="imagen">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_local">ID del local:</label>
+                    <select class="form-control" id="id_local" name="id_local">
+                        <?php while ($fila = mysqli_fetch_array($resultado)) { ?>
+                            <option value="<?php echo $fila['id_local']; ?>"><?php echo $fila['Nombre']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Añadir producto</button>
+            </form>
+
+        </div>
     </main>
     <footer>
         <!-- place footer here -->

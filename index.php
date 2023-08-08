@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-group">
                         <label for="username" class="form-label">Usuario:</label>
                         <div class="d-flex align-items-center">
-                            <input type="text" class="form-control mb-3" id="username" name="username" required>
+                            <input type="text" class="form-control mb-3" id="username" autofocus name="username" required>
                             <img src="./images/avatar.png" alt="avatar" class="avatar mb-3 mx-2" width="30px">
                         </div>
                     </div>
