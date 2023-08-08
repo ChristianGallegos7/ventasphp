@@ -142,7 +142,7 @@
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        alert(xhr.responseText);
+                        // alert(xhr.responseText);
                         location.reload(); // Recargar la página después de eliminar el producto
                     } else {
                         alert('Error al eliminar el producto');

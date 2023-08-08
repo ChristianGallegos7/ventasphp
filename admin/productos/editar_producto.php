@@ -12,15 +12,32 @@ if (!empty($_POST)) {
     $local = mysqli_real_escape_string($conn, $_POST["local"]);
 
     // Actualizar los datos del producto en la base de datos
-    $query = "UPDATE productos_local SET nombre_producto = '$nombre_producto', descripcion_producto = '$descripcion_producto', stock = $stock, precio = $precio, id_local = $local WHERE id_producto = $id_producto";
-    mysqli_query($conn, $query);
+    $query = "UPDATE productos_local SET nombre_producto = ?, descripcion_producto = ?, stock = ?, precio = ?, id_local = ? WHERE id_producto = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "ssiiii", $nombre_producto, $descripcion_producto, $stock, $precio, $local, $id_producto);
+    mysqli_stmt_execute($stmt);
 
     // Verificar si se ha seleccionado una nueva imagen para el producto
     if (!empty($_FILES["imagen"]["tmp_name"])) {
-        // Procesar la imagen y actualizarla en la base de datos
-        // ...
-    }
+        // Obtener los datos de la imagen
+        $imagen_nombre = $_FILES["imagen"]["name"];
+        $imagen_tipo = $_FILES["imagen"]["type"];
+        $imagen_tamano = $_FILES["imagen"]["size"];
+        $imagen_temp = $_FILES["imagen"]["tmp_name"];
 
+        // Verificar si la imagen es válida
+        if ($imagen_tipo == "image/jpeg" || $imagen_tipo == "image/png") {
+            // Leer el contenido de la imagen
+            $imagen_contenido = file_get_contents($imagen_temp);
+
+            // Actualizar los datos de la imagen en la base de datos
+            $query = "UPDATE productos_local SET imagen = ? WHERE id_producto = ?";
+            $stmt = mysqli_prepare($conn, $query);
+            mysqli_stmt_bind_param($stmt, "bi", $imagen_contenido, $id_producto);
+            mysqli_stmt_send_long_data($stmt, 0, $imagen_contenido);
+            mysqli_stmt_execute($stmt);
+        }
+    }
     // Redirigir al usuario a la página de lista de productos
     header("Location: ../index.php");
     exit();

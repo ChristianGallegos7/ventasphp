@@ -46,27 +46,27 @@ $resultado = mysqli_query($conn, $query);
 
                 <div class="form-group">
                     <label for="nombre_producto">Nombre del producto:</label>
-                    <input type="text" class="form-control mb-3" id="nombre_producto" name="nombre_producto">
+                    <input type="text" class="form-control mb-3" id="nombre_producto" name="nombre_producto" required>
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion_producto">Descripción del producto:</label>
-                    <textarea class="form-control mb-3" id="descripcion_producto" name="descripcion_producto"></textarea>
+                    <textarea class="form-control mb-3" id="descripcion_producto" name="descripcion_producto" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="stock">Stock:</label>
-                    <input type="number" class="form-control mb-3" id="stock" name="stock">
+                    <input type="number" class="form-control mb-3" id="stock" min="1" value="1" name="stock" oninput="this.value = this.value.replace(/-/g, '')" required>
                 </div>
 
                 <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input type="number" class="form-control mb-3" id="precio" name="precio" step="0.01">
+                    <input type="text" class="form-control mb-3" id="precio" name="precio" pattern="[0-9]+(\.[0-9]{1,2})?" oninput="this.value = this.value.replace(/-/g, '')" required>
                 </div>
 
                 <div class="form-group">
                     <label for="imagen">Imagen:</label>
-                    <input type="file" class="form-control-file mb-3" id="imagen" name="imagen">
+                    <input type="file" class="form-control-file mb-3" id="imagen" name="imagen" required>
                 </div>
 
                 <div class="form-group mb-3">
@@ -80,6 +80,7 @@ $resultado = mysqli_query($conn, $query);
 
 
                 <button type="submit" class="btn btn-primary">Añadir producto</button>
+                <a name="" id="" class="btn btn-primary" href="http://localhost/dashboard/trainer/admin/index.php" role="button">Cancelar</a>
             </form>
 
         </div>
@@ -92,6 +93,24 @@ $resultado = mysqli_query($conn, $query);
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+
+    <script>
+        const nombreProductoInput = document.getElementById('nombre_producto');
+        nombreProductoInput.addEventListener('input', function() {
+            const regex = /[0-9]/g;
+            if (regex.test(this.value)) {
+                this.value = this.value.replace(regex, '');
+            }
+        });
+
+        const nombreProductoInput2 = document.getElementById('descripcion_producto');
+        nombreProductoInput2.addEventListener('input', function() {
+            const regex = /[0-9]/g;
+            if (regex.test(this.value)) {
+                this.value = this.value.replace(regex, '');
+            }
+        });
     </script>
 </body>
 
