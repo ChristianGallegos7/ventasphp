@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -31,43 +34,29 @@
                 </thead>
                 <tbody id="cart-items">
                     <?php
-                    // Iniciar la sesión
                     session_start();
+                    var_dump($_SESSION['carrito']); // Muestra el contenido del carrito
 
-                    // Mostrar los productos del carrito
-                    if (isset($_SESSION['carrito']) && is_array($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
-                        foreach ($_SESSION['carrito'] as $i => $producto) {
-                            if (isset($producto['nombre_producto'])) {
-                                $nombre_producto = $producto['nombre_producto'];
-                            } else {
-                                $nombre_producto = "No hay nombre";
-                            }
-                            if (isset($producto['cantidad']) && isset($producto['precio'])) {
-                                $subtotal = 0;
-                                if (is_array($producto['cantidad'])) {
-                                    $subtotal = intval($producto['cantidad']) * intval($producto['precio']);
-                                } else {
-                                    $subtotal = $producto['cantidad'] * $producto['precio'];
-                                }
-
-                                // Check if 'nombre_producto' is set before accessing it
-                                $nombre_producto = isset($producto['nombre_producto']) ? $producto['nombre_producto'] : 'No hay nombre';
-
-                                echo '<tr>';
-                                echo '<td>' . (string)$nombre_producto . '</td>';
-
-
-                                // Convert 'cantidad' and 'precio' arrays to strings using 'implode()'
-                                echo '<td>' . ((is_array($producto['cantidad'])) ? array_sum($producto['cantidad']) : $producto['cantidad']) . '</td>';
-
-                                echo '<td>$' . (is_array($producto['precio']) ? implode(', ', $producto['precio']) : $producto['precio']) . '</td>';
-                                echo '<td>$' . number_format($subtotal, 2) . '</td>';
-                                echo '<td><button class="btn btn-danger">Eliminar</button></td>';
-                                echo '</tr>';
-                            }
-                        }
+                    if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
+                        echo "<p>El carrito está vacío.</p>";
                     } else {
-                        echo '<tr><td colspan="5">El carrito está vacío.</td></tr>';
+                        echo '<tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                    </tr>';
+                        var_dump($_SESSION['carrito']);
+
+                        foreach ($_SESSION['carrito'] as $producto) {
+                            $subtotal = $producto['cantidad'] * $producto['precio'];
+                            echo "<tr>
+                <td>{$producto['nombre_producto']}</td>
+                <td>{$producto['cantidad']}</td>
+                <td>$" . number_format($producto['precio'], 2) . "</td>
+                <td>$" . number_format($subtotal, 2) . "</td>
+            </tr>";
+                        }
                     }
                     ?>
                 </tbody>

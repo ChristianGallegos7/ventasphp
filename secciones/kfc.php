@@ -93,7 +93,7 @@
                 echo '<input type="hidden" name="nombre_producto[]" value="' . $nombre_producto . '">'; // Add the product name to the form
 
                 echo '<div class="text-center">';
-                echo '<button class="btn btn-primary add-to-cart-btn" data-product-id="' . $row['id_producto'] . '">Añadir al carrito</button>';
+                echo '<button class="btn btn-primary add-to-cart-btn" id="add-to-cart-btn" data-product-id="' . $row['id_producto'] . '">Añadir al carrito</button>';
                 echo '</div>';
 
                 echo '</form>';
@@ -118,17 +118,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
     <script>
-        $(document).ready(function() {
-            $('.add-to-cart-btn').click(function() {
-                var productId = $(this).data('product-id');
-                $.post('add-to-cart.php', {
-                    productId: productId
-                }, function(data) {
-                    alert('Producto agregado al carrito');
+        document.addEventListener("DOMContentLoaded", function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const cantidadInput = this.closest('.card-body').querySelector('input[name="cantidad[]"]');
+                    const precioInput = this.closest('.card-body').querySelector('input[name="precio[]"]');
+                    const nombreProductoInput = this.closest('.card-body').querySelector('input[name="nombre_producto[]"]');
+
+                    const cantidad = cantidadInput.value;
+                    const precio = precioInput.value;
+                    const nombre_producto = nombreProductoInput.value;
+
+                    console.log("Datos enviados al servidor:");
+                    console.log("Product ID:", productId);
+                    console.log("Cantidad:", cantidad);
+                    console.log("Precio:", precio);
+                    console.log("Nombre del producto:", nombre_producto);
+
+                    const formData = new FormData();
+                    formData.append("productId", productId);
+                    formData.append("cantidad", cantidad);
+                    formData.append("precio", precio);
+                    formData.append("nombre_producto", nombre_producto);
+
+                    fetch('add-to-cart.php', {
+                            method: "POST",
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            alert('Producto agregado al carrito');
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
                 });
             });
         });
     </script>
+
+
 </body>
 
 </html>
