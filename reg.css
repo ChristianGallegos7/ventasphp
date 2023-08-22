@@ -1,0 +1,126 @@
+body {
+    background-image: url('img/reg.avif');
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 400px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    bottom: 0;
+}
+
+.registro-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #008f39;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #FFA500;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    background-color: #F5F5F5;
+    color: #333;
+    border-radius: 3px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #FFA500;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: #FF8C00;
+}
+
+/* Estilos adicionales para hacerlo más colorido */
+
+.container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    font-size: 32px;
+}
+
+label {
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    background-color: #F5F5F5;
+    color: #333;
+    border: 1px solid #A9A9A9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #FFA500;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    outline: none;
+    /* Agregar esta línea */
+    margin-bottom: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #FF8C00;
+}
+
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #F5F5F5;
+    border: none;
+    padding: 10px;
+    margin-bottom: 15px;
+    color: #333;
+    border-radius: 3px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #333;
+}

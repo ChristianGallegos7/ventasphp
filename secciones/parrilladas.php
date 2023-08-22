@@ -57,7 +57,6 @@
             require("../conexion.php");
             $sql = "SELECT * FROM productos_local WHERE id_local = 2";
             $result = $conn->query($sql);
-
             while ($row = $result->fetch_assoc()) {
                 $precio = $row['precio'];
                 echo '<div class="col">';
@@ -67,20 +66,40 @@
                 echo '<div class="card-body">';
                 echo '<p class="card-text">' . $row['descripcion_producto'] . '</p>';
                 echo '<p class="card-text">Precio: $' . number_format($precio, 2) . '</p>';
-                echo '<form action="agregar_al_carrito.php" method="POST">';
+
+                //FORMULARIO
+                echo '<form action="carrito.php" method="POST">';
+
                 echo '<input type="hidden" name="id_producto" value="' . $row['id_producto'] . '">';
 
                 echo '<input type="number" class="form-control mb-3" name="cantidad[]" value="0" min="0">';
+
+                $precio = $row['precio'];
                 echo '<input type="hidden" name="precio[]" value="' . $precio . '">';
+
+                // Fetch the product name from the database based on the ID
+                $id_producto = $row['id_producto'];
+                $nombre_producto = ""; // Variable to store the product name
+
+                $sql = "SELECT nombre_producto FROM productos_local WHERE id_producto = $id_producto";
+                $result_nombre = $conn->query($sql);
+
+                if ($result_nombre->num_rows > 0) {
+                    $row_nombre = $result_nombre->fetch_assoc();
+                    $nombre_producto = $row_nombre['nombre_producto'];
+                }
+
+                echo '<input type="hidden" name="nombre_producto[]" value="' . $nombre_producto . '">'; // Add the product name to the form
+
                 echo '<div class="text-center">';
-                echo '<button type="submit" class="btn btn-primary">' . "Añadir al carrito" . '</button>';
+                echo '<button class="btn btn-primary add-to-cart-btn" id="add-to-cart-btn" data-product-id="' . $row['id_producto'] . '">Añadir al carrito</button>';
                 echo '</div>';
+
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
             }
-
             $conn->close();
             ?>
         </div>
@@ -94,6 +113,48 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const cantidadInput = this.closest('.card-body').querySelector('input[name="cantidad[]"]');
+                    const precioInput = this.closest('.card-body').querySelector('input[name="precio[]"]');
+                    const nombreProductoInput = this.closest('.card-body').querySelector('input[name="nombre_producto[]"]');
+
+                    const cantidad = cantidadInput.value;
+                    const precio = precioInput.value;
+                    const nombre_producto = nombreProductoInput.value;
+
+                    console.log("Datos enviados al servidor:");
+                    console.log("Product ID:", productId);
+                    console.log("Cantidad:", cantidad);
+                    console.log("Precio:", precio);
+                    console.log("Nombre del producto:", nombre_producto);
+
+                    const formData = new FormData();
+                    formData.append("productId", productId);
+                    formData.append("cantidad", cantidad);
+                    formData.append("precio", precio);
+                    formData.append("nombre_producto", nombre_producto);
+
+                    fetch('add-to-cart.php', {
+                            method: "POST",
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            alert('Producto agregado al carrito');
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                });
+            });
+        });
     </script>
 </body>
 

@@ -25,17 +25,17 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Producto</th>
+                        <!-- <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio unitario</th>
                         <th>Precio total</th>
-                        <th>Acciones</th>
+                        <th>Acciones</th> -->
                     </tr>
                 </thead>
                 <tbody id="cart-items">
                     <?php
                     session_start();
-                    var_dump($_SESSION['carrito']); // Muestra el contenido del carrito
+                    // var_dump($_SESSION['carrito']); // Muestra el contenido del carrito
 
                     if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
                         echo "<p>El carrito está vacío.</p>";
@@ -45,8 +45,9 @@
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
                         <th>Subtotal</th>
+                        <th>Acciones</th>
                     </tr>';
-                        var_dump($_SESSION['carrito']);
+                        // var_dump($_SESSION['carrito']);
 
                         foreach ($_SESSION['carrito'] as $producto) {
                             $subtotal = $producto['cantidad'] * $producto['precio'];
