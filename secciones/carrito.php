@@ -17,7 +17,31 @@
 
 <body>
     <header>
-        <!-- place navbar here -->
+        <nav class="navbar navbar-expand-lg navbar-light  p-3">
+            <div class="container-fluid">
+                <h1><a class="navbar-brand titulo" href="#">CARRITO</a></h1>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="d-flex align-items-center justify-content-center mx-auto">
+                    <a href="carrito.php" class="nav-link carrito"> <img src="../images/carrito.png" alt="CARRITO DE COMPRAS" width="30px" title="Click para ver carrito de compras"> </a>
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+
+                        <!-- <li class="nav-item">
+                            <a class="nav-link titulo2" aria-current="page" href="local.php">Inicio</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link titulo2" href="local.php">Regresar a locales🏪</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
     <main>
         <div class="container">
