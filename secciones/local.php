@@ -49,36 +49,31 @@
     <div class="container my-5 text-center">
       <h2 class="mb-5">Elige tu local</h2>
       <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-          <div class="card h-100 p-3">
-            <img src="../images/kfc.jpg" class="card-img-top img" alt="Local 1" height="300px" width="150px">
-            <div class="card-body">
-              <h5 class="card-title">KFC</h5>
-              <p class="card-text">El mejor pollo</p>
-              <a href="kfc.php" class="btn btn-dark p-3">Ir a este local 🛒</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 p-3">
-            <img src="../images/pinchos.jpg" class="card-img-top img" alt="Local 2" height="300px">
-            <div class="card-body">
-              <h5 class="card-title">Parrilladas</h5>
-              <p class="card-text">Las mejores parrilladas</p>
-              <a href="parrilladas.php" class="btn btn-dark p-3">Ir a este local 🛒</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100 p-3">
-            <img src="../images/bebidas.webp" class="card-img-top bebida" alt="Local 3">
-            <div class="card-body">
-              <h5 class="card-title">Bebidas</h5>
-              <p class="card-text">Bebidas refrescantes</p>
-              <a href="bebidas.php" class="btn btn-dark p-3">Ir a este local 🛒</a>
-            </div>
-          </div>
-        </div>
+
+
+        <?php
+        require("../conexion.php");
+        $sql = "SELECT * FROM local";
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+          echo '<div class="col">';
+          echo '<div class="card h-100 p-3">';
+          echo '<img class="card-img-top " height="500px" src="data:image/jpeg;base64,' . base64_encode($row['imagen']) . '" alt="Imagen del producto">';
+          echo '<div class="card-body">';
+          echo '<h5 class="card-title">' . $row['Nombre'] . '</h5>';
+          echo '<p class="card-text">Bebidas refrescantes</p>';
+          // Aquí generamos el enlace dinámicamente utilizando el nombre del archivo .php
+          $localPage = strtolower(str_replace(" ", "-", $row['Nombre'])) . ".php";
+          echo '<a href="' . $localPage . '" class="btn btn-dark p-3">Ir a este local 🛒</a>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+        }
+
+
+        ?>
+
       </div>
     </div>
   </main>

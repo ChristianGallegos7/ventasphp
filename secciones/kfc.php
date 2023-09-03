@@ -69,7 +69,7 @@
                 echo '<p class="card-text">Precio: $' . number_format($precio, 2) . '</p>';
 
                 //FORMULARIO
-                echo '<form action="carrito.php" method="POST">';
+                echo '<form  method="POST">';
 
                 echo '<input type="hidden" name="id_producto" value="' . $row['id_producto'] . '">';
 

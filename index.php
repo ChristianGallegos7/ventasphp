@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container container2 d-flex flex-column align-items-center justify-content-center">
             <div class="card p-4" style="min-width: 450px;">
                 <h2 class="text-center">Iniciar sesión</h2>
-                <form action="index.php" method="POST">
+                <form action="index.php" method="POST" id="loginForm">
                     <div class="form-group">
                         <label for="username" class="form-label">Usuario:</label>
                         <div class="d-flex align-items-center">
@@ -76,7 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="password" class="form-label">Contraseña:</label>
                         <div class="d-flex align-items-center">
                             <input type="password" class="form-control mb-3" id="password" name="password" required>
-                            <img src="./images/lock.png" alt="avatar" class="avatar mb-3 mx-2" width="30px">
+                            <img src="./images/lock.png" id="showPasswordBtn" alt="avatar" class="avatar mb-3 mx-2" width="30px">
+                            <!-- <button type="button" id="showPasswordBtn">Mostrar</button> -->
                         </div>
                     </div>
 
@@ -100,12 +101,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer>
         <!-- place footer here -->
     </footer>
+    <script>
+        const showPasswordBtn = document.getElementById("showPasswordBtn");
+        const passwordInput = document.getElementById("password");
+
+        showPasswordBtn.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                showPasswordBtn.textContent = "Ocultar";
+            } else {
+                passwordInput.type = "password";
+                showPasswordBtn.textContent = "Mostrar";
+            }
+        });
+    </script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
+
 </body>
 
 </html>

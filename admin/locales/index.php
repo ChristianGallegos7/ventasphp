@@ -23,8 +23,8 @@
             <div class="nav navbar-nav gap-4">
                 <a class="nav-item nav-link btn btn-info p-3" href="#">Admin</a>
                 <a class="nav-item nav-link active btn btn-success text-white p-3" href="./productos/crear.php" aria-current="page">Agregar productos <span class="visually-hidden">(current)</span></a>
-                <!-- <a class="nav-item nav-link active btn btn-warning text-white p-3" href="./locales/crear.php" aria-current="page">Agregar Locales <span class="visually-hidden">(current)</span></a> -->
-                <a class="nav-item nav-link active btn btn-info text-white p-3" href="./locales/index.php" aria-current="page"> Lista Locales <span class="visually-hidden">(current)</span></a>
+                <a class="nav-item nav-link active btn btn-warning text-white p-3" href="./locales/crear.php" aria-current="page">Agregar Locales <span class="visually-hidden">(current)</span></a>
+                <a class="nav-item nav-link active btn btn-warning text-white p-3" href="./locales/index.php" aria-current="page"> Lista Locales <span class="visually-hidden">(current)</span></a>
                 <a class="nav-item nav-link btn btn-danger text-white mx-3 p-3" href="http://localhost/dashboard/trainer/">Salir</a>
             </div>
         </nav>
@@ -38,46 +38,44 @@
                     <thead>
                         <tr>
                             <!-- <th scope="col">ID PRODUCTO</th> -->
-                            <th scope="col">NOMBRE PRODUCTO</th>
-                            <th scope="col">DESCRIPCION PRODUCTO</th>
+                            <th scope="col">NOMBRE LOCAL</th>
+                            <!-- <th scope="col">DESCRIPCION PRODUCTO</th>
                             <th scope="col">STOCK</th>
                             <th scope="col">PRECIO</th>
                             <th scope="col">LOCAL</th>
                             <th scope="col">IMAGEN</th>
-                            <th scope="col">ACCIONES</th>
+                            <th scope="col">ACCIONES</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        require_once("../conexion.php");
-                        $query = "SELECT p.*, l.Nombre 
-                        FROM productos_local p 
-                        INNER JOIN local l ON p.id_local = l.id_local";
+                        require_once("../../conexion.php");
+                        $query = "SELECT * FROM local";
                         $result = mysqli_query($conn, $query);
 
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '<tr>';
                             // echo '<td class="text-center">' . $row["id_producto"] . '</td>';
-                            echo '<td>' . $row["nombre_producto"] . '</td>';
-                            echo '<td>' . $row["descripcion_producto"] . '</td>';
-                            echo '<td>' . $row["stock"] . '</td>';
-                            echo '<td>' . $row["precio"] . "$" . '</td>';
-                            echo '<td class="text-center">' . $row["Nombre"] . '</td>';
-                            $imagen_base64 = base64_encode($row["imagen"]);
-                            echo '<td><img width="100px" class="imagenadmin" src="data:image/jpeg;base64,' . $imagen_base64 . '"/></td>';
+                            echo '<td>' . $row["Nombre"] . '</td>';
+                            // echo '<td>' . $row["descripcion_producto"] . '</td>';
+                            // echo '<td>' . $row["stock"] . '</td>';
+                            // echo '<td>' . $row["precio"] . "$" . '</td>';
+                            // echo '<td class="text-center">' . $row["Nombre"] . '</td>';
+                            // $imagen_base64 = base64_encode($row["imagen"]);
+                            // echo '<td><img width="100px" class="imagenadmin" src="data:image/jpeg;base64,' . $imagen_base64 . '"/></td>';
                             echo '<td>';
 
-                            // Formulario para eliminar el producto
-                            echo '<form action="productos/eliminar_producto.php" method="POST" class="d-inline">';
-                            echo '<input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">';
+                            // // Formulario para eliminar el producto
+                            echo '<form action="productos/eliminar_locales.php" method="POST" class="d-inline">';
+                            echo '<input type="hidden" name="id_local" value="' . $row["id_local"] . '">';
 
                             echo '</form>';
-                            echo '<button type="button" class="btn btn-danger m-3 eliminarProducto" data-bs-toggle="modal" data-bs-target="#confirmarEliminacion" data-id-producto="' . $row["id_producto"] . '">Eliminar</button>';
+                            echo '<button type="button" class="btn btn-danger m-3 eliminarProducto" data-bs-toggle="modal" data-bs-target="#confirmarEliminacion" data-id-producto="' . $row["id_local"] . '">Eliminar</button>';
 
                             // Formulario para editar el producto
                             echo '<form action="" method="POST" class="d-inline">';
-                            echo '<input type="hidden" name="id_producto" value="' . $row["id_producto"] . '">';
-                            echo '<a href="productos/editar_producto.php?id_producto=' . $row["id_producto"] . '" class="btn btn-primary">Editar</a>';
+                            echo '<input type="hidden" name="id_local" value="' . $row["id_local"] . '">';
+                            echo '<a href="productos/editar_locales.php?id_producto=' . $row["id_local"] . '" class="btn btn-primary">Editar</a>';
                             echo '</form>';
 
                             echo '</td>';
@@ -99,7 +97,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            ¿Estás seguro de que deseas eliminar este producto?
+                            ¿Estás seguro de que deseas eliminar este local?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

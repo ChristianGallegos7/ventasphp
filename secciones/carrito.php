@@ -90,6 +90,7 @@
             <!-- <div class="d-flex justify-content-end">
                 <h4> Total: $<span id="cart-total"><?php echo number_format($total, 2); ?></span></h4>
             </div> -->
+            <a name="pagar" id="pagar" class="btn btn-primary" href="#" role="button">PAGAR</a>
         </div>
     </main>
     <footer>
