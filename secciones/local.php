@@ -59,7 +59,7 @@
         while ($row = $result->fetch_assoc()) {
           echo '<div class="col">';
           echo '<div class="card h-100 p-3">';
-          echo '<img class="card-img-top " height="500px" src="data:image/jpeg;base64,' . base64_encode($row['imagen']) . '" alt="Imagen del producto">';
+          echo '<img class="card-img-top " height="300px" src="data:image/jpeg;base64,' . base64_encode($row['imagen']) . '" alt="Imagen del producto">';
           echo '<div class="card-body">';
           echo '<h5 class="card-title">' . $row['Nombre'] . '</h5>';
           echo '<p class="card-text">Bebidas refrescantes</p>';

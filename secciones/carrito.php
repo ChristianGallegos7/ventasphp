@@ -70,17 +70,18 @@
                         <th>Precio Unitario</th>
                         <th>Subtotal</th>
                         <th>Acciones</th>
-                    </tr>';
+                        </tr>';
                         // var_dump($_SESSION['carrito']);
 
                         foreach ($_SESSION['carrito'] as $producto) {
                             $subtotal = $producto['cantidad'] * $producto['precio'];
                             echo "<tr>
-                <td>{$producto['nombre_producto']}</td>
-                <td>{$producto['cantidad']}</td>
-                <td>$" . number_format($producto['precio'], 2) . "</td>
-                <td>$" . number_format($subtotal, 2) . "</td>
-            </tr>";
+                            <td>{$producto['nombre_producto']}</td>
+                            <td>{$producto['cantidad']}</td>
+                            <td>$" . number_format($producto['precio'], 2) . "</td>
+                            <td>$" . number_format($subtotal, 2) . "</td>
+                            <td> <button> </td>
+                            </tr>";
                         }
                     }
                     ?>

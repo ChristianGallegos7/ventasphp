@@ -61,7 +61,7 @@
                 $precio = $row['precio'];
                 echo '<div class="col">';
                 echo '<div class="card text-center my-3 bg-blue">';
-                echo '<img class="card-img-top " height="500px" src="data:image/jpeg;base64,' . base64_encode($row['imagen']) . '" alt="Imagen del producto">';
+                echo '<img class="card-img-top " height="300px" src="data:image/jpeg;base64,' . base64_encode($row['imagen']) . '" alt="Imagen del producto">';
                 echo '<h5 class="card-title mx-3">' . $row['nombre_producto'] . '</h5>';
                 echo '<div class="card-body">';
                 echo '<p class="card-text">' . $row['descripcion_producto'] . '</p>';
